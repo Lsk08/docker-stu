@@ -1,0 +1,25 @@
+docker镜像位于 /var/lib/docker
+docker info   -- 查看
+docker images [repo]  -- 列出镜像
+docker inspect image -- 镜像详细信息 与容器相同
+docke rmi image   -- 删除镜像
+
+docker search [op] term  -- 搜索镜像
+docker pull [op] term  -- 拉取镜像  term = repo:tag
+docker push term -- 推送镜像
+
+------构建镜像  
+构建镜像相当于对修改的保存
+等同于我们可以复用已经搭建好的环境 docker run
+也就是通过docker run运行容器 修改之后通过 docker commit保存
+之后就可以提交到仓库 或者 通过这个镜像创建多个一样的容器
+docker commit [ops] container repo:tag
+-a 作者  -m msg -p 暂停
+
+创建dockerfile  -- dockerfile也就是一系列命令的集合 包括该镜像的基础和执行的命令
+FROM ubuntu:14.04
+MAINTAINER xxx "xxx@xx.com"
+RUN apt-get update
+RUN apt-get install -y nginx
+EXPOSE 80
+docker build -t 'tagname' path

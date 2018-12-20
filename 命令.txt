@@ -1,0 +1,45 @@
+启动
+  docker run image [cmd] [arg]
+交互启动bash
+  docker -i -t image /bin/bash  -- 退出 exit
+  ---------以上2种 容器运行完成就会停止---------
+查看
+    docker ps [-a][-l]   -- a = 查看所有 l = 查看最后一个
+    docker inspect name/id   -- 查看容器详细信息
+自定义容器名
+    docker run --name=自定义名 -i -t image /bin/bash
+启动停止的容器
+    docker start [-i] name/id    -- start之后以前的file还在 程序都不运行了
+删除容器
+    docker rm name/id
+
+后台运行容器
+  docker run XXX
+  cirl+p cirl+Q
+ 再次进入
+   docker attach name/id
+ run启动后台容器
+   docker run -d image [cmd][arg]
+ 查看log
+   docker logs -f -t --tail name/id     -- -f=跟随 -t=时间戳 --tail 行数
+ 查看进程 
+   docker top name/id
+ 在运行的docker中启动进程
+   docker exec [-d|-i|-t] name [cmd] [arg]
+停止容器
+  docker stop name   -- 等待几秒
+  docker kill name   -- 直接停止
+
+端口映射
+  docker run -P -p 
+docker run -p 80 -i -t centos /bin/bash           containerPort
+docker run -p 8080:80 -i -t centos /bin/bash      hostPort:containerPort
+docker run -p 0.0.0.0:80 -i -t centos /bin/bash   ip:containerPort
+docker run -p 0.0.0.0:8080:80 -i -t centos /bin/bash  ip:hostPort:containerPort
+端口查看
+  docker port name
+可以使用 container.ip:port 访问 或者 host.ip:port访问
+container.ip使用 docker inspect查看
+stop容器会停止服务
+容器的端口每次重启都会改变
+  
