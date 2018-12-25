@@ -1,0 +1,40 @@
+dockerFile指令
+FROM ubuntun:14.04
+--FROM image/image:tag
+MAINTAINER tom
+RUN
+--RUN <command>    -- 镜像构建时运行
+EXPOSE
+--EXPOSE port 打开的端口
+CMD ["executable","param1","param2"]
+-- CMD ["/usr/bin/nginx","-g","daemon off;"] -- 容器运行时运行的默认命令 相当于docker run 之后的cmd
+可被 docker run 末尾的命令覆盖
+ENTRYPOINT ["cmd","param1","param2"]  -- 不会被覆盖
+
+组合使用
+ENTRYPOINT ["/usr/bin/nginx"]
+CMD ["-g"]
+
+ADD <src>...<dest>
+ADD["<src>"..."<dest>"]
+
+COPY<src>...<dest>
+COPY["<src>"..."<dest>"]
+使用本地的文件 放到 dockerFile里
+ADD具有解压缩功能 类似于 tar
+如果单纯复制 使用COPY
+
+WORKDIR /path/to/workdir 指定工作目录
+ENV key=value  -- 环境变量
+USER daemon -- 用户身份
+ONBUILD --- 镜像触发器 当这个镜像被当做其他镜像的基础镜像才会触发 本身构建不会触发
+
+类似于linux的bash 一次编写 次次运行
+
+dockerFIle构建 每执行1条指令 都会生产一个新的dockerFile镜像层 然后执行
+下一条指令
+也就是会产生很多中间层镜像
+所以dockerfile会大量使用cache
+   docker build --no-cache   -- 不使用缓存
+
+docker history img-name  -- 查看构建过程
