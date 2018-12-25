@@ -1,0 +1,10 @@
+user  <--> client <--> docker deamon process
+
+client 有 命令行工具 远程客户端
+client 连接方式 
+unix://var/run/docker.sock  -- 默认
+tcp://host:port
+fd://socketfd
+
+nc -U /var/run/docker.sock
+GET /info HTTP/1.1
