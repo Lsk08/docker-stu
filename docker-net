@@ -1,0 +1,33 @@
+ifconfig.docker0
+linux网桥
+可以设置一个ip地址
+相当于拥有一个隐藏的虚拟网卡
+docker0会为每一个container分配一个ip和对应的mac地址 最多65534个
+
+自定义网桥
+brctl addbr br0
+ifconfig br0 192.168.100.1 netmask 255.255.255.0
+vim /etc/default/docker -> add DOCKER_OPS -b=br0
+
+centos 需要 vim /lib/systemd/system/docker.service 
+设置 EnvironmentFile=/etc/sysconfig/docker
+ExecStart=/usr/bin/docker daemon -H fd:// $DOCKER_OPTS
+才可以
+
+-----容器之间互联
+容器之间默认可通过ip互联
+但是ip地址在每次容器启动时会变化 无法使用
+
+通过容器id相连
+docker run --link=[container_name]:[alias] [image] [commond]
+---容器之间拒绝连接
+--icc=false
+
+---允许特定容器的连接
+--icc=false --iptables=true --link
+只允许link配置的机器访问
+
+----docker访问互联网
+--ip-forward=true    计算机是否转发流量
+iptables  
+docker容器实际上通过宿主机host的iptables进行访问控制
