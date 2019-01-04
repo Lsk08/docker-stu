@@ -1,0 +1,5 @@
+docker 推送
+1 修改tag
+docker tag <imageID> <namespace>/<image name>:<version tag eg latest>
+2 push
+docker push <image>
